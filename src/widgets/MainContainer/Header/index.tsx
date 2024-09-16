@@ -1,12 +1,13 @@
 "use client";
-import { styleState } from "@/src/shared/store/styleState";
-import Image from "next/image";
-import { useRecoilState } from "recoil";
 
 export interface Props {}
 
 export function Header() {
-  return <div className="bg-transparent w-full h-14 flex items-center"></div>;
+  return (
+    <div className="bg-transparent w-full h-14 flex items-center px-6 py-4">
+      <h1 className="">MY TICKET TIMER</h1>
+    </div>
+  );
 }
 
 export default Header;

@@ -13,9 +13,9 @@ export const Digit = forwardRef<HTMLSpanElement, PropsWithChildren<Props>>(
       <motion.span
         ref={ref} // Forwarded ref is passed here
         className={clsx("flex flex-col text-center text-[32px]", {
-          "text-[64px] w-10": sizeType === "big",
-          "text-[48px] w-8": sizeType === "normal",
-          "text-[32px] w-6": sizeType === "small",
+          "sm:text-[64px] sm:w-10 text-[48px] w-8": sizeType === "big",
+          "sm:text-[48px] sm:w-8 text-[32px] w-6": sizeType === "normal",
+          "sm:text-[32px] sm:w-6 text-[24px] w-4": sizeType === "small",
         })}
         transition={{
           type: "spring",

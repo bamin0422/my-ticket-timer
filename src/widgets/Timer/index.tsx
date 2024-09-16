@@ -18,7 +18,7 @@ export function Timer({ currentTime: defaultCurrentTime }: Props) {
           {[years, months, days].map((time, timeIdx) => (
             <Fragment key={`${time}-date-${timeIdx}`}>
               {timeIdx ? (
-                <span className="flex flex-col w-5 text-center text-[32px]">
+                <span className="flex flex-col w-5 text-center sm:text-[32px] text-[24px]">
                   -
                 </span>
               ) : null}
@@ -39,7 +39,7 @@ export function Timer({ currentTime: defaultCurrentTime }: Props) {
             {timeIdx ? (
               <span
                 key={`${timeIdx}-divider`}
-                className="flex pb-4 px-[48px] flex-col text-center text-[64px]"
+                className="flex pb-4 px-[12px] sm:px-[48px] flex-col text-center text-[48px] sm:text-[64px]"
               >
                 :
               </span>
