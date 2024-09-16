@@ -1,16 +1,26 @@
 import { motion } from "framer-motion";
 import { forwardRef, PropsWithChildren } from "react";
+import { DigitSizeType } from "./types";
+import clsx from "clsx";
 
-export const Digit = forwardRef<HTMLSpanElement, PropsWithChildren<unknown>>(
-  ({ children }, ref) => {
+export interface Props {
+  sizeType: DigitSizeType;
+}
+
+export const Digit = forwardRef<HTMLSpanElement, PropsWithChildren<Props>>(
+  ({ children, sizeType }, ref) => {
     return (
       <motion.span
         ref={ref} // Forwarded ref is passed here
-        className="flex flex-col w-5 text-center text-[32px]"
+        className={clsx("flex flex-col text-center text-[32px]", {
+          "text-[64px] w-10": sizeType === "big",
+          "text-[48px] w-8": sizeType === "normal",
+          "text-[32px] w-6": sizeType === "small",
+        })}
         transition={{
           type: "spring",
           duration: 0.9,
-          bounce: 0.3,
+          bounce: 0.5,
         }}
         initial={{
           opacity: 0,
