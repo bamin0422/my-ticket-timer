@@ -1,7 +1,7 @@
 import { PaintBrushIcon } from "@heroicons/react/24/outline";
 import { PaintBrushIcon as EditModeIcon } from "@heroicons/react/24/solid";
 import { motion } from "framer-motion";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import ColorPicker from "react-best-gradient-color-picker";
 
 export interface Props {
@@ -11,11 +11,28 @@ export interface Props {
 
 export function ColorPickerContainer({ color, setColor }: Props) {
   const [editMode, setEditMode] = useState<boolean>(false);
+  const containerRef = useRef<HTMLDivElement>(null); // 컴포넌트의 참조
+
+  const handleClickOutside = (event: MouseEvent) => {
+    if (
+      containerRef.current &&
+      !containerRef.current.contains(event.target as Node)
+    ) {
+      setEditMode(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
-    <>
+    <div ref={containerRef}>
       <motion.button
-        onBlur={() => setEditMode(false)}
         transition={{ type: "spring" }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -37,11 +54,13 @@ export function ColorPickerContainer({ color, setColor }: Props) {
         <ColorPicker
           className="absolute z-10 mt-2 right-[24px] top-[52px] bg-transparent shadow-lg"
           value={color}
-          onChange={setColor}
+          onChange={(newColor: string) => setColor(newColor)}
         />
       )}
-    </>
+    </div>
   );
 }
+
+ColorPickerContainer.displayName = "ColorPickerContainer";
 
 export default ColorPickerContainer;

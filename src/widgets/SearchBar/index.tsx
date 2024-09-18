@@ -5,17 +5,19 @@ import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 export interface Props {
   keyword?: string;
   onKeywordChange?: (newKeyword: string) => void;
+  onSubmit: () => void;
 }
 
-const defaultPlaceholder = "Please enter the site you want to access.";
+const defaultPlaceholder = "Enter the site URL.";
 
-export function SearchBar({ keyword, onKeywordChange }: Props) {
+export function SearchBar({ keyword, onKeywordChange, onSubmit }: Props) {
   const [editMode, setEditMode] = useState<boolean>(false);
   const [placeholder, setPlaceholder] = useState<string>("");
   const inputRef = useRef(null);
 
   const onSubmitHandler = () => {
     setEditMode(false);
+    onSubmit();
   };
 
   useEffect(() => {
@@ -47,14 +49,15 @@ export function SearchBar({ keyword, onKeywordChange }: Props) {
       <AnimatePresence>
         {editMode ? (
           <motion.div
+            transition={{ type: "spring", stiffness: 100 }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="top-1/2 left-1/2 border-solid border text-white border-white sm:h-12 grid grid-flow-col justify-stretch gap-2 px-4 py-2 rounded-xl w-[456px]"
+            className="top-1/2 left-1/2 border-solid border text-white border-white sm:h-12 grid grid-flow-col justify-stretch gap-2 px-4 py-2 h-[48px] rounded-xl sm:w-[456px] w-full"
           >
             <input
               value={keyword}
-              className="bg-transparent w-[348px] focus:outline-none"
+              className="bg-transparent sm:w-[348px] focus:outline-none"
               ref={inputRef}
               placeholder={placeholder}
               onChange={(e) =>
@@ -72,7 +75,7 @@ export function SearchBar({ keyword, onKeywordChange }: Props) {
           </motion.div>
         ) : (
           <motion.button
-            transition={{ type: "spring" }}
+            transition={{ type: "spring", stiffness: 100 }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -90,5 +93,7 @@ export function SearchBar({ keyword, onKeywordChange }: Props) {
     </div>
   );
 }
+
+SearchBar.displayName = "SearchBar";
 
 export default SearchBar;

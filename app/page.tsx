@@ -1,5 +1,5 @@
 "use client";
-import Provider from "@/src/shared/store/Provider";
+import Provider from "@/src/app/Provider";
 import MainContainer from "@/src/widgets/MainContainer";
 
 export default function Index() {

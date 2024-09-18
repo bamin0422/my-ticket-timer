@@ -1,7 +1,7 @@
 "use client";
 
 import { TicketIcon } from "@heroicons/react/24/solid";
-import ColorPickerContainer from "../../ColorPickerContainer";
+import ColorPickerContainer from "../../../ColorPickerContainer";
 import { Dispatch, SetStateAction } from "react";
 
 export interface Props {
@@ -20,5 +20,7 @@ export function Header({ color, setColor }: Props) {
     </div>
   );
 }
+
+Header.displayName = "Header";
 
 export default Header;

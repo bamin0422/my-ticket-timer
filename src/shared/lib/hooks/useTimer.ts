@@ -17,7 +17,7 @@ const useCurrentTime = (defaultCurrentTime: Date) => {
         clearInterval(timeout.current);
       }
     };
-  }, []);
+  }, [defaultCurrentTime]);
 
   return { currentTime };
 };

@@ -1,15 +1,47 @@
 import clsx from "clsx";
-import { Header } from "./Header";
+import { Header } from "./ui/Header";
 import Timer from "../Timer";
-import { useState } from "react";
-import Footer from "./Footer";
+import { useEffect, useState } from "react";
+import Footer from "./ui/Footer";
 import SearchBar from "../SearchBar";
-import { ColorPickerContainer } from "../ColorPickerContainer";
+import { useQuery } from "@tanstack/react-query";
+import * as siteUrlTimeQuery from "./api/siteUrlTimeQuery";
 
 export function MainContainer() {
-  const [time, setTime] = useState<Date>(new Date());
   const [keyword, setKeyword] = useState<string>("");
   const [color, setColor] = useState("#000000");
+  const [isFirst, setFirst] = useState(true);
+  const {
+    data: defaultTime,
+    refetch,
+    error,
+  } = useQuery({
+    queryKey: [siteUrlTimeQuery.QUERY_KEY],
+    queryFn: async () => {
+      return isFirst && keyword
+        ? new Date()
+        : await siteUrlTimeQuery.getSiteUrlTime(keyword);
+    },
+  });
+  const [time, setTime] = useState<Date>(defaultTime ?? new Date());
+
+  const onSubmitHandler = () => {
+    refetch()
+      .then((newDate) => {
+        if (newDate.data) {
+          setTime(newDate.data ?? new Date());
+        }
+      })
+      .catch(console.error);
+  };
+
+  useEffect(() => {
+    setFirst(false);
+  }, []);
+
+  if (error) {
+    return <></>;
+  }
 
   return (
     <div
@@ -25,6 +57,7 @@ export function MainContainer() {
           <SearchBar
             keyword={keyword}
             onKeywordChange={(newKeyword) => setKeyword(newKeyword)}
+            onSubmit={onSubmitHandler}
           />
         </div>
       </div>
@@ -32,5 +65,7 @@ export function MainContainer() {
     </div>
   );
 }
+
+MainContainer.displayName = "MainContainer";
 
 export default MainContainer;

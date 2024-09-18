@@ -1,7 +1,7 @@
 import { useTimer } from "@/src/shared/lib/hooks/useTimer";
 import { AnimatePresence } from "framer-motion";
 import { Fragment } from "react";
-import Digit from "./Digit";
+import Digit from "./ui/Digit";
 
 export interface Props {
   currentTime: Date;
@@ -10,6 +10,8 @@ export interface Props {
 export function Timer({ currentTime: defaultCurrentTime }: Props) {
   const { years, months, days, hours, minutes, seconds } =
     useTimer(defaultCurrentTime);
+
+  console.log(defaultCurrentTime);
 
   return (
     <div className="flex flex-col justify-center select-none">
@@ -64,5 +66,7 @@ export function Timer({ currentTime: defaultCurrentTime }: Props) {
     </div>
   );
 }
+
+Timer.displayName = "Timer";
 
 export default Timer;
