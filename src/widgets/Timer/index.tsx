@@ -12,13 +12,16 @@ export function Timer({ currentTime: defaultCurrentTime }: Props) {
     useTimer(defaultCurrentTime);
 
   return (
-    <div className="flex flex-col justify-center">
+    <div className="flex flex-col justify-center select-none">
       <div className="flex justify-center items-center">
         <AnimatePresence mode="popLayout">
           {[years, months, days].map((time, timeIdx) => (
             <Fragment key={`${time}-date-${timeIdx}`}>
               {timeIdx ? (
-                <span className="flex flex-col w-5 text-center sm:text-[32px] text-[24px]">
+                <span
+                  key={`${time}-dash-${timeIdx}`}
+                  className="flex flex-col w-5 text-center sm:text-[32px] text-[24px]"
+                >
                   -
                 </span>
               ) : null}
@@ -35,7 +38,7 @@ export function Timer({ currentTime: defaultCurrentTime }: Props) {
 
       <div className="flex justify-center items-center">
         {[hours, minutes, seconds].map((time, timeIdx) => (
-          <>
+          <Fragment key={`${timeIdx}-time-digit`}>
             {timeIdx ? (
               <span
                 key={`${timeIdx}-divider`}
@@ -55,7 +58,7 @@ export function Timer({ currentTime: defaultCurrentTime }: Props) {
                 </Digit>
               ))}
             </AnimatePresence>
-          </>
+          </Fragment>
         ))}
       </div>
     </div>
