@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import clsx from "clsx";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,9 +16,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <main>{children}</main>
+    <html className="size-full" lang="en">
+      <body className={clsx(inter.className, "size-full")}>
+        <main className="size-full">{children}</main>
       </body>
     </html>
   );
