@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import clsx from "clsx";
+import { Analytics } from "@vercel/analytics/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,6 +20,7 @@ export default function RootLayout({
     <html className="size-full" lang="en">
       <body className={clsx(inter.className, "size-full")}>
         <main className="size-full">{children}</main>
+        <Analytics />
       </body>
     </html>
   );
